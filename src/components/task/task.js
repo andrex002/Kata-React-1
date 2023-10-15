@@ -1,32 +1,48 @@
 import React from 'react';
 import './task.css';
 
-const Task = (props) => {
-  let liClass;
-  if (props.completed) {
-    liClass = 'completed';
-  } else if (props.editing) {
-    liClass = 'editing';
-  } else {
-    liClass = '';
+export default class Task extends React.Component {
+  state = {
+    completed: false,
+    editing: false
   }
 
+  onLabelClick = () => {
+    this.setState((state) => {
+      return {
+        completed: !state.completed
+      }
+    })
+  }
 
+  onEditClick = () => {
+    this.setState({
+      editing: true
+    })
+  }
 
-  return (
-    <li className={liClass}>
-      <div className="view">
-        <input className="toggle" type="checkbox" />
-        <label>
-          <span className="description">{props.label}</span>
-          <span className="created">created 5 minutes ago</span>
-        </label>
-        <button className="icon icon-edit"></button>
-        <button className="icon icon-destroy"></button>
-      </div>
-      {props.editing && <input type="text" className="edit" value="Editing task"></input>}
-    </li>
-  );
-};
+  render() {
+    let liClassNames = '';
+    if (this.state.completed) {
+      liClassNames = 'completed';
+    } else if (this.state.editing) {
+      liClassNames += 'editing';
+    }
 
-export default Task;
+    return (
+
+      < li className={liClassNames} >
+        <div className="view">
+          <input className="toggle" type="checkbox" />
+          <label>
+            <span className="description" onClick={this.onLabelClick}>{this.props.label}</span>
+            <span className="created">created 5 minutes ago</span>
+          </label>
+          <button className="icon icon-edit" onClick={this.onEditClick}></button>
+          <button className="icon icon-destroy" onClick={this.props.onDeleted}></button>
+        </div>
+        {this.state.editing && <input type="text" className="edit" ></input>}
+      </li >
+    )
+  }
+}
