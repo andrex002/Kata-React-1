@@ -51,6 +51,7 @@
   bottom: 0;
   margin: auto 0;
   border: none;
+  z-index: -1;
   /* Mobile Safari */
   -webkit-appearance: none;
   appearance: none;

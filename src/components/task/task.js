@@ -2,47 +2,51 @@ import React from 'react';
 import './task.css';
 
 export default class Task extends React.Component {
+
   state = {
-    completed: false,
-    editing: false
+    label: this.props.value
   }
 
-  onLabelClick = () => {
-    this.setState((state) => {
-      return {
-        completed: !state.completed
-      }
-    })
+  getLiClassName = () => {
+    let liClassNames;
+    if (this.props.completed) {
+      liClassNames = 'completed';
+    } else if (this.props.editing) {
+      liClassNames = 'editing';
+    }
+    return liClassNames;
   }
 
-  onEditClick = () => {
+  onLabelEdit = (evt) => {
     this.setState({
-      editing: true
-    })
+      label: evt.target.value
+    });
+  }
+
+  handleEditKeyDown = (evt) => {
+    if (evt.key === 'Enter' && this.state.label !== '') {
+      this.props.onEditing(this.props.id, this.state.label);
+      this.setState({
+        label: ''
+      })
+    }
   }
 
   render() {
-    let liClassNames = '';
-    if (this.state.completed) {
-      liClassNames = 'completed';
-    } else if (this.state.editing) {
-      liClassNames += 'editing';
-    }
-
     return (
-
-      < li className={liClassNames} >
+      <li className={this.getLiClassName()} >
         <div className="view">
-          <input className="toggle" type="checkbox" />
-          <label>
-            <span className="description" onClick={this.onLabelClick}>{this.props.label}</span>
+          <input id={this.props.id} className="toggle" type="checkbox" />
+          <label htmlFor={this.props.id} onClick={this.props.onToogleCompleted}>
+            <span className="description">{this.props.label}</span>
             <span className="created">created 5 minutes ago</span>
           </label>
-          <button className="icon icon-edit" onClick={this.onEditClick}></button>
+          <button className="icon icon-edit" onClick={this.props.onToogleEditing}></button>
           <button className="icon icon-destroy" onClick={this.props.onDeleted}></button>
         </div>
-        {this.state.editing && <input type="text" className="edit" ></input>}
+        {this.props.editing && <input type="text" className="edit" onChange={this.onLabelEdit} onKeyDown={this.handleEditKeyDown} value={this.state.label} ></input>}
       </li >
     )
   }
 }
+
