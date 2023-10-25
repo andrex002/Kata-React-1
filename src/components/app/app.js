@@ -9,9 +9,9 @@ export default class App extends React.Component {
 
   state = {
     data: [
-      { id: 1, taskText: 'Completed task', completed: false, editing: false },
-      { id: 2, taskText: 'Editing task', completed: false, editing: false },
-      { id: 3, taskText: 'Active task', completed: false, editing: false }
+      { id: 1, taskText: 'Completed task', completed: false, editing: false, date: new Date() },
+      { id: 2, taskText: 'Editing task', completed: false, editing: false, date: new Date() },
+      { id: 3, taskText: 'Active task', completed: false, editing: false, date: new Date() }
     ],
     filter: 'all'
   };
@@ -54,7 +54,8 @@ export default class App extends React.Component {
       id: this.numberId++,
       taskText: text,
       completed: false,
-      editing: false
+      editing: false,
+      date: new Date()
     }
 
     this.setState((state) => {
@@ -69,22 +70,15 @@ export default class App extends React.Component {
   };
 
   editItem = (id, text) => {
-    const editItem = {
-      id: id,
-      taskText: text,
-      completed: false,
-      editing: false
-    }
-
     this.setState((state) => {
-      const index = state.data.findIndex((elem) => {
-        return elem.id === id;
-      });
-      const before = state.data.slice(0, index);
-      const after = state.data.slice(index + 1);
-      const newData = [...before, editItem, ...after];
       return {
-        data: newData
+        data: state.data.map(task => {
+          if (task.id === id) {
+            task.taskText = text;
+            task.editing = false;
+          }
+          return task;
+        })
       }
     })
   };
