@@ -4,36 +4,38 @@ import './new-task-form.css';
 
 export default class NewTaskForm extends React.Component {
   state = {
-    label: ''
-  }
+    label: '',
+  };
 
   onLabelChange = (evt) => {
     this.setState({
-      label: evt.target.value
+      label: evt.target.value,
     });
-  }
+  };
 
   onPressKeyDown = (evt) => {
     if (evt.key === 'Enter' && this.state.label !== '') {
       this.props.onItemAdded(this.state.label);
       this.setState({
-        label: ''
-      })
+        label: '',
+      });
     }
-  }
+  };
 
   render() {
     return (
-      <input className="new-todo"
+      <input
+        className="new-todo"
         onChange={this.onLabelChange}
         onKeyDown={this.onPressKeyDown}
         placeholder="What needs to be done?"
         value={this.state.label}
-        autoFocus />
-    )
+        autoFocus
+      />
+    );
   }
-};
+}
 
 NewTaskForm.propTypes = {
-  onItemAdded: PropTypes.func.isRequired
-}
+  onItemAdded: PropTypes.func.isRequired,
+};

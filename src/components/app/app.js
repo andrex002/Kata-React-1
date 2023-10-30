@@ -1,4 +1,5 @@
 import React from 'react';
+
 import NewTaskForm from '../new-task-form/new-task-form';
 import TaskList from '../task-list/task-list';
 import Footer from '../footer/footer';
@@ -11,9 +12,9 @@ export default class App extends React.Component {
     data: [
       { id: 1, taskText: 'Completed task', completed: false, editing: false, date: new Date() },
       { id: 2, taskText: 'Editing task', completed: false, editing: false, date: new Date() },
-      { id: 3, taskText: 'Active task', completed: false, editing: false, date: new Date() }
+      { id: 3, taskText: 'Active task', completed: false, editing: false, date: new Date() },
     ],
-    filter: 'all'
+    filter: 'all',
   };
 
   toogleProperty = (arr, id, propName) => {
@@ -23,30 +24,26 @@ export default class App extends React.Component {
     const oldItem = arr[index];
     const newItem = {
       ...oldItem,
-      [propName]: !oldItem[propName]
+      [propName]: !oldItem[propName],
     };
 
-    return [
-      ...arr.slice(0, index),
-      newItem,
-      ...arr.slice(index + 1)
-    ];
+    return [...arr.slice(0, index), newItem, ...arr.slice(index + 1)];
   };
 
   onToogleCompleted = (id) => {
     this.setState((state) => {
       return {
-        data: this.toogleProperty(state.data, id, 'completed')
+        data: this.toogleProperty(state.data, id, 'completed'),
       };
-    })
+    });
   };
 
   onToogleEditing = (id) => {
     this.setState((state) => {
       return {
-        data: this.toogleProperty(state.data, id, 'editing')
+        data: this.toogleProperty(state.data, id, 'editing'),
       };
-    })
+    });
   };
 
   addItem = (text) => {
@@ -55,32 +52,29 @@ export default class App extends React.Component {
       taskText: text,
       completed: false,
       editing: false,
-      date: new Date()
-    }
+      date: new Date(),
+    };
 
     this.setState((state) => {
-      const newArr = [
-        ...state.data,
-        newItem
-      ];
+      const newArr = [...state.data, newItem];
       return {
-        data: newArr
-      }
-    })
+        data: newArr,
+      };
+    });
   };
 
   editItem = (id, text) => {
     this.setState((state) => {
       return {
-        data: state.data.map(task => {
+        data: state.data.map((task) => {
           if (task.id === id) {
             task.taskText = text;
             task.editing = false;
           }
           return task;
-        })
-      }
-    })
+        }),
+      };
+    });
   };
 
   deleteItem = (id) => {
@@ -92,9 +86,9 @@ export default class App extends React.Component {
       const after = state.data.slice(index + 1);
       const newData = [...before, ...after];
       return {
-        data: newData
-      }
-    })
+        data: newData,
+      };
+    });
   };
 
   filter = (tasks, filterName) => {
@@ -111,17 +105,17 @@ export default class App extends React.Component {
   };
 
   onFilterChange = (filterName) => {
-    this.setState({ filter: filterName })
+    this.setState({ filter: filterName });
   };
 
   clearCompleted = () => {
     this.setState((state) => {
-      return { data: state.data.filter(task => !task.completed) }
-    })
-  }
+      return { data: state.data.filter((task) => !task.completed) };
+    });
+  };
 
   render() {
-    const tasksCount = this.state.data.filter(item => !item.completed).length;
+    const tasksCount = this.state.data.filter((item) => !item.completed).length;
     const visibleTasks = this.filter(this.state.data, this.state.filter);
 
     return (
@@ -147,5 +141,5 @@ export default class App extends React.Component {
         </section>
       </section>
     );
-  };
+  }
 }

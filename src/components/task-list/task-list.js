@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import Task from '../task/task';
 import './task-list.css';
 
 const TaskList = ({ tasks, onDeleted, onToogleCompleted, onToogleEditing, onEditing }) => {
-  const tasksList = tasks.map(item => {
+  const tasksList = tasks.map((item) => {
     return (
       <Task
         key={item.id}
@@ -14,18 +15,13 @@ const TaskList = ({ tasks, onDeleted, onToogleCompleted, onToogleEditing, onEdit
         onToogleEditing={() => onToogleEditing(item.id)}
         onEditing={onEditing}
       />
-    )
+    );
   });
-  return (
-    <ul className="todo-list">
-      {tasksList}
-    </ul>
-  );
+  return <ul className="todo-list">{tasksList}</ul>;
 };
 
-
 TaskList.defaultProps = {
-  tasks: []
+  tasks: [],
 };
 
 TaskList.propTypes = {
@@ -33,7 +29,7 @@ TaskList.propTypes = {
   onDeleted: PropTypes.func.isRequired,
   onToogleCompleted: PropTypes.func.isRequired,
   onToogleEditing: PropTypes.func.isRequired,
-  onEditing: PropTypes.func.isRequired
+  onEditing: PropTypes.func.isRequired,
 };
 
 export default TaskList;

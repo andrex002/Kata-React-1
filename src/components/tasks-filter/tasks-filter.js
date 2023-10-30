@@ -9,31 +9,29 @@ const TasksFilter = ({ filter, onFilterChange }) => {
     { filterName: 'completed', label: 'Completed' },
   ];
 
-  const filterButtons = filterButtonsArr.map(filterButton => {
+  const filterButtons = filterButtonsArr.map((filterButton) => {
     const isActive = filter === filterButton.filterName;
     const buttonClass = isActive ? 'selected' : '';
     return (
       <li key={filterButton.filterName}>
-        <button className={buttonClass} onClick={() => onFilterChange(filterButton.filterName)}>{filterButton.label}</button>
+        <button className={buttonClass} onClick={() => onFilterChange(filterButton.filterName)}>
+          {filterButton.label}
+        </button>
       </li>
-    )
-  })
+    );
+  });
 
-  return (
-    <ul className="filters">
-      {filterButtons}
-    </ul>
-  );
+  return <ul className="filters">{filterButtons}</ul>;
 };
 
 TasksFilter.defaultProps = {
   filter: 'all',
-  onFilterChange: () => { }
+  onFilterChange: () => {},
 };
 
 TasksFilter.propTypes = {
   filter: PropTypes.string,
-  onFilterChange: PropTypes.func
+  onFilterChange: PropTypes.func,
 };
 
 export default TasksFilter;

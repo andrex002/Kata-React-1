@@ -4,10 +4,9 @@ import { formatDistanceToNow } from 'date-fns';
 import './task.css';
 
 export default class Task extends React.Component {
-
   state = {
-    label: this.props.task.taskText
-  }
+    label: this.props.task.taskText,
+  };
 
   getLiClassName = () => {
     let liClassNames;
@@ -17,43 +16,57 @@ export default class Task extends React.Component {
       liClassNames = 'editing';
     }
     return liClassNames;
-  }
+  };
 
   onLabelEdit = (evt) => {
     this.setState({
-      label: evt.target.value
+      label: evt.target.value,
     });
-  }
+  };
 
   handleEditKeyDown = (evt) => {
     if (evt.key === 'Enter' && this.state.label !== '') {
       this.props.onEditing(this.props.task.id, this.state.label);
       this.setState({
-        label: ''
-      })
+        label: '',
+      });
     }
-  }
+  };
 
   render() {
     return (
-      <li className={this.getLiClassName()} >
+      <li className={this.getLiClassName()}>
         <div className="view">
-          <input id={this.props.task.id} className="toggle" type="checkbox" onChange={this.props.onToogleCompleted} checked={this.props.task.completed} />
+          <input
+            id={this.props.task.id}
+            className="toggle"
+            type="checkbox"
+            onChange={this.props.onToogleCompleted}
+            checked={this.props.task.completed}
+          />
           <label htmlFor={this.props.task.id}>
             <span className="description">{this.props.task.taskText}</span>
             <span className="created">
               {`created ${formatDistanceToNow(this.props.task.date, {
                 includeSeconds: true,
-                addSuffix: true
+                addSuffix: true,
               })}`}
             </span>
           </label>
           <button className="icon icon-edit" onClick={this.props.onToogleEditing}></button>
           <button className="icon icon-destroy" onClick={this.props.onDeleted}></button>
         </div>
-        {this.props.task.editing && <input type="text" className="edit" onChange={this.onLabelEdit} onKeyDown={this.handleEditKeyDown} value={this.state.label} />}
-      </li >
-    )
+        {this.props.task.editing && (
+          <input
+            type="text"
+            className="edit"
+            onChange={this.onLabelEdit}
+            onKeyDown={this.handleEditKeyDown}
+            value={this.state.label}
+          />
+        )}
+      </li>
+    );
   }
 }
 
@@ -63,8 +76,8 @@ Task.defaultProps = {
     taskText: 'New Task',
     completed: false,
     editing: false,
-    date: new Date()
-  }
+    date: new Date(),
+  },
 };
 
 Task.propTypes = {
@@ -73,10 +86,10 @@ Task.propTypes = {
     taskText: PropTypes.string,
     completed: PropTypes.bool,
     editing: PropTypes.bool,
-    date: PropTypes.instanceOf(Date)
+    date: PropTypes.instanceOf(Date),
   }),
   onDeleted: PropTypes.func.isRequired,
   onToogleCompleted: PropTypes.func.isRequired,
   onToogleEditing: PropTypes.func.isRequired,
-  onEditing: PropTypes.func.isRequired
+  onEditing: PropTypes.func.isRequired,
 };
