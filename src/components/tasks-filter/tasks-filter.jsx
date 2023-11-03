@@ -34,4 +34,4 @@ TasksFilter.propTypes = {
   onFilterChange: PropTypes.func,
 };
 
-export default TasksFilter;
+export { TasksFilter };

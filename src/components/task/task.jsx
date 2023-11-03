@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { formatDistanceToNow } from 'date-fns';
 import './task.css';
 
-export default class Task extends React.Component {
+class Task extends React.Component {
   state = {
     label: this.props.task.taskText,
   };
@@ -82,7 +82,7 @@ Task.defaultProps = {
 
 Task.propTypes = {
   task: PropTypes.shape({
-    id: PropTypes.number,
+    id: PropTypes.string,
     taskText: PropTypes.string,
     completed: PropTypes.bool,
     editing: PropTypes.bool,
@@ -93,3 +93,5 @@ Task.propTypes = {
   onToogleEditing: PropTypes.func.isRequired,
   onEditing: PropTypes.func.isRequired,
 };
+
+export { Task };

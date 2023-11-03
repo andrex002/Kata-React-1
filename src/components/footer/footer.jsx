@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import TasksFilter from '../tasks-filter/tasks-filter';
+import { TasksFilter } from '../tasks-filter/tasks-filter';
 import './footer.css';
 
 const Footer = ({ tasksCount, filter, onFilterChange, clearCompleted }) => {
@@ -28,4 +28,4 @@ Footer.propTypes = {
   clearCompleted: PropTypes.func.isRequired,
 };
 
-export default Footer;
+export { Footer };

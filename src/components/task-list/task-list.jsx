@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Task from '../task/task';
+import { Task } from '../task/task';
 import './task-list.css';
 
 const TaskList = ({ tasks, onDeleted, onToogleCompleted, onToogleEditing, onEditing }) => {
@@ -32,4 +32,4 @@ TaskList.propTypes = {
   onEditing: PropTypes.func.isRequired,
 };
 
-export default TaskList;
+export { TaskList };

@@ -1,18 +1,17 @@
 import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
-import NewTaskForm from '../new-task-form/new-task-form';
-import TaskList from '../task-list/task-list';
-import Footer from '../footer/footer';
+import { NewTaskForm } from '../new-task-form/new-task-form';
+import { TaskList } from '../task-list/task-list';
+import { Footer } from '../footer/footer';
 import './app.css';
 
-export default class App extends React.Component {
-  numberId = 100;
-
+class App extends React.Component {
   state = {
     data: [
-      { id: 1, taskText: 'Completed task', completed: false, editing: false, date: new Date() },
-      { id: 2, taskText: 'Editing task', completed: false, editing: false, date: new Date() },
-      { id: 3, taskText: 'Active task', completed: false, editing: false, date: new Date() },
+      { id: '1', taskText: 'Completed task', completed: false, editing: false, date: new Date() },
+      { id: '2', taskText: 'Editing task', completed: false, editing: false, date: new Date() },
+      { id: '3', taskText: 'Active task', completed: false, editing: false, date: new Date() },
     ],
     filter: 'all',
   };
@@ -48,7 +47,7 @@ export default class App extends React.Component {
 
   addItem = (text) => {
     const newItem = {
-      id: this.numberId++,
+      id: uuidv4(),
       taskText: text,
       completed: false,
       editing: false,
@@ -143,3 +142,5 @@ export default class App extends React.Component {
     );
   }
 }
+
+export { App };
