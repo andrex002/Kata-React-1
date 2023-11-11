@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Task } from '../task/task';
 import './task-list.css';
 
-const TaskList = ({ tasks, onDeleted, onToogleCompleted, onToogleEditing, onEditing }) => {
+const TaskList = ({ tasks, onDeleted, onToogleCompleted, onToogleEditing, onEditing, onPlay, onPaused }) => {
   const tasksList = tasks.map((item) => {
     return (
       <Task
@@ -14,6 +14,8 @@ const TaskList = ({ tasks, onDeleted, onToogleCompleted, onToogleEditing, onEdit
         onToogleCompleted={() => onToogleCompleted(item.id)}
         onToogleEditing={() => onToogleEditing(item.id)}
         onEditing={onEditing}
+        onPlay={() => onPlay(item.id)}
+        onPaused={() => onPaused(item.id)}
       />
     );
   });
@@ -30,6 +32,8 @@ TaskList.propTypes = {
   onToogleCompleted: PropTypes.func.isRequired,
   onToogleEditing: PropTypes.func.isRequired,
   onEditing: PropTypes.func.isRequired,
+  onPlay: PropTypes.func.isRequired,
+  onPaused: PropTypes.func.isRequired,
 };
 
 export { TaskList };

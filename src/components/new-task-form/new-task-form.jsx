@@ -5,33 +5,65 @@ import './new-task-form.css';
 class NewTaskForm extends React.Component {
   state = {
     label: '',
+    min: '',
+    sec: '',
   };
 
   onLabelChange = (evt) => {
     this.setState({
-      label: evt.target.value,
+      [evt.target.name]: evt.target.value,
     });
   };
 
-  onPressKeyDown = (evt) => {
-    if (evt.key === 'Enter' && this.state.label !== '') {
-      this.props.onItemAdded(this.state.label);
-      this.setState({
-        label: '',
-      });
-    }
+  onSubmitHandler = (evt) => {
+    evt.preventDefault();
+
+    this.props.onItemAdded(this.state.label, this.state.min, this.state.sec);
+    this.setState({
+      label: '',
+      min: '',
+      sec: '',
+    });
   };
 
   render() {
     return (
-      <input
-        className="new-todo"
-        onChange={this.onLabelChange}
-        onKeyDown={this.onPressKeyDown}
-        placeholder="What needs to be done?"
-        value={this.state.label}
-        autoFocus
-      />
+      <form className="new-todo-form" onSubmit={this.onSubmitHandler}>
+        <input
+          className="new-todo"
+          name="label"
+          onChange={this.onLabelChange}
+          placeholder="What needs to be done?"
+          value={this.state.label}
+          autoFocus
+          required
+        />
+        <input
+          className="new-todo-form__timer"
+          type="number"
+          onChange={this.onLabelChange}
+          name="min"
+          min="0"
+          max="59"
+          placeholder="Min"
+          value={this.state.min}
+          autoFocus
+          required
+        />
+        <input
+          className="new-todo-form__timer"
+          type="number"
+          onChange={this.onLabelChange}
+          name="sec"
+          min="0"
+          max="59"
+          placeholder="Sec"
+          value={this.state.sec}
+          autoFocus
+          required
+        />
+        <button className="visually-hidden" type="submit"></button>
+      </form>
     );
   }
 }

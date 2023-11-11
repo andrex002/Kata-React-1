@@ -9,9 +9,33 @@ import './app.css';
 class App extends React.Component {
   state = {
     data: [
-      { id: '1', taskText: 'Completed task', completed: false, editing: false, date: new Date() },
-      { id: '2', taskText: 'Editing task', completed: false, editing: false, date: new Date() },
-      { id: '3', taskText: 'Active task', completed: false, editing: false, date: new Date() },
+      {
+        id: '1',
+        taskText: 'Completed task',
+        completed: false,
+        editing: false,
+        date: new Date(),
+        min: 1,
+        sec: 0,
+      },
+      {
+        id: '2',
+        taskText: 'Editing task',
+        completed: false,
+        editing: false,
+        date: new Date(),
+        min: 1,
+        sec: 0,
+      },
+      {
+        id: '3',
+        taskText: 'Active task',
+        completed: false,
+        editing: false,
+        date: new Date(),
+        min: 1,
+        sec: 0,
+      },
     ],
     filter: 'all',
   };
@@ -45,13 +69,16 @@ class App extends React.Component {
     });
   };
 
-  addItem = (text) => {
+  addItem = (text, min, sec) => {
     const newItem = {
       id: uuidv4(),
       taskText: text,
       completed: false,
       editing: false,
       date: new Date(),
+      min: Number(min),
+      sec: Number(sec),
+      timerOn: false,
     };
 
     this.setState((state) => {
@@ -113,6 +140,60 @@ class App extends React.Component {
     });
   };
 
+  startsTimer = (taskId) => {
+    let [{ intervalId, timerStatus }] = this.state.data.filter((item) => item.id === taskId);
+    if (timerStatus === 'stop' || intervalId) return;
+
+    const enablesСountdown = () => {
+      const [{ completed }] = this.state.data.filter((item) => item.id === taskId);
+      this.setState(({ data }) => {
+        const newData = data.map((item) => {
+          if (item.id === taskId && !completed) {
+            if (item.sec === 0) {
+              item.min--;
+              item.sec = 60;
+            }
+            item.sec--;
+            if (item.min === 0 && item.sec === 0) {
+              clearInterval(item.intervalId);
+              item.intervalId = null;
+              item.timerStatus = 'stop';
+            }
+            item.timerOn = true;
+          }
+
+          return item;
+        });
+        return { data: newData };
+      });
+    };
+    let interval = setInterval(enablesСountdown, 1000);
+    this.setState(({ data }) => {
+      const newData = data.map((task) => {
+        if (task.id === taskId) {
+          task.intervalId = interval;
+        }
+        return task;
+      });
+      return { data: newData };
+    });
+  };
+
+  pausedTimer = (taskId) => {
+    const [{ intervalId }] = this.state.data.filter((item) => item.id === taskId);
+    this.setState(({ data }) => {
+      return {
+        data: data.map((item) => {
+          if (item.id === taskId) {
+            item.intervalId = null;
+          }
+          return item;
+        }),
+      };
+    });
+    clearInterval(intervalId);
+  };
+
   render() {
     const tasksCount = this.state.data.filter((item) => !item.completed).length;
     const visibleTasks = this.filter(this.state.data, this.state.filter);
@@ -130,6 +211,8 @@ class App extends React.Component {
             onToogleCompleted={this.onToogleCompleted}
             onToogleEditing={this.onToogleEditing}
             onEditing={this.editItem}
+            onPlay={this.startsTimer}
+            onPaused={this.pausedTimer}
           />
           <Footer
             tasksCount={tasksCount}
