@@ -1,5 +1,6 @@
 Ссылка на развернутое приложение: https://kata-react-1.vercel.app/
-#Ссылка на развернутое приложение с таймером: https://kata-react-1-git-task-timer-andrex002s-projects.vercel.app/
+
+Ссылка на развернутое приложение с таймером: https://kata-react-1-git-task-timer-andrex002s-projects.vercel.app/
 
 
 # Getting Started with Create React App
