@@ -89,12 +89,17 @@
 }
 
 .todo-list li label .description {
+  flex: 0 0 77px;
   font-size: 13px;
   color: gray;
 }
 
+.todo-list li label .description + .description {
+  flex: 0 1 auto;
+}
+
 .todo-list li label .title {
-  word-break: break-all;
+  flex: 0 0 180px;
   display: block;
   line-height: 1.2;
   transition: color 0.4s;
