@@ -99,7 +99,7 @@
 }
 
 .todo-list li label .title {
-  flex: 0 0 180px;
+  flex: 0 0 181px;
   display: block;
   line-height: 1.2;
   transition: color 0.4s;
