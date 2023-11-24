@@ -1,10 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { ITask } from '../../models';
 import { Task } from '../task/task';
 import './task-list.css';
 
-const TaskList = ({ tasks, onDeleted, onToogleCompleted, onToogleEditing, onEditing, onPlay, onPaused }) => {
+interface TaskListProps {
+  tasks: ITask[];
+  onDeleted: (id: string) => void;
+  onToogleCompleted: (id: string) => void;
+  onToogleEditing: (id: string) => void;
+  onEditing: (id: string, text: string) => void;
+  onPlay: (id: string) => void;
+  onPaused: (id: string) => void;
+}
+
+function TaskList({
+  tasks,
+  onDeleted,
+  onToogleCompleted,
+  onToogleEditing,
+  onEditing,
+  onPlay,
+  onPaused,
+}: TaskListProps) {
   const tasksList = tasks.map((item) => {
     return (
       <Task
@@ -20,7 +39,7 @@ const TaskList = ({ tasks, onDeleted, onToogleCompleted, onToogleEditing, onEdit
     );
   });
   return <ul className="todo-list">{tasksList}</ul>;
-};
+}
 
 TaskList.defaultProps = {
   tasks: [],
