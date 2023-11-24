@@ -1,4 +1,4 @@
-Ссылка на развернутое приложение: [https://kata-react-1.vercel.app/](https://kata-react-1-git-hooks-andrex002s-projects.vercel.app/)
+Ссылка на развернутое приложение: https://kata-react-1-git-hooks-andrex002s-projects.vercel.app/
 
 Добавил TypeScript по просьбе ментора
 
